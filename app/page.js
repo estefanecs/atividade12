@@ -56,9 +56,9 @@ export default function Home() {
     function MessageRow({ message }) {
       return (
         <tr>
-          <td>{message.author}</td>
-          <td>{message.message}</td>
-          <td>{message.date}</td>
+          <td>{message}</td>
+          <td>{message}</td>
+          <td>{message}</td>
         </tr>
       );
     }
@@ -78,4 +78,3 @@ export default function Home() {
     }
 
 }
-
