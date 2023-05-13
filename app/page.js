@@ -6,7 +6,54 @@ import React from 'react';
 import { useState } from 'react';
 
 
-//Coloque o código dos demais componentes aqui...
+function SearchBar({filterText, inStockOnly, onFilterTextChange,
+  onInStockOnlyChange}) {
+  return (
+    <form>
+      <label>
+        Procure uma mensagem:
+      </label>
+      <input type="text" value={filterText} placeholder="Search..." 
+      onChange={(e) => onFilterTextChange(e.target.value)}/>
+    </form>
+  );
+}
+
+function FilterableMessageTable({ messages, filterText}) {
+  const rows = [];
+  messages.forEach((message) => {
+     if (messages.includes(filterText)) {
+      return;
+    }
+    rows.push(
+      <MessageRow
+        message={message}
+        key={message.message} />);
+  });
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Author</th>
+          <th>Message</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </table>
+  );
+}
+
+function MessageRow({ message }) {
+  return (
+    <tr>
+      <td>{message.author}</td>
+      <td>{message.message}</td>
+      <td>{message.date}</td>
+    </tr>
+  );
+}
 
 export default function Home() {
     
@@ -23,58 +70,7 @@ export default function Home() {
          <SearchBar filterText={filterText}  inStockOnly={inStockOnly} 
       onFilterTextChange={setFilterText}
       onInStockOnlyChange={setInStockOnly}/>
-        <FilterableMessageTable messages={blogMessages} />
+        <FilterableMessageTable messages={blogMessages} filterText={filterText} />
       </main>
-    )
-
-      function FilterableMessageTable({ messages}) {
-        const rows = [];
-        let lastCategory = null;
-        messages.forEach((message) => {
-          rows.push(
-            <MessageRow
-              message={message}
-              key={message.author} />
-          );
-          lastCategory = product.category;
-        });
-
-        return (
-          <table>
-            <thead>
-              <tr>
-                <th>Author</th>
-                <th>Message</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </table>
-        );
-      }
-
-    function MessageRow({ message }) {
-      return (
-        <tr>
-          <td>{message}</td>
-          <td>{message}</td>
-          <td>{message}</td>
-        </tr>
-      );
-    }
-
-    ///PESQUISA
-    function SearchBar({filterText, inStockOnly, onFilterTextChange,
-      onInStockOnlyChange}) {
-      return (
-        <form>
-          <label>
-            Procure uma mensagem:
-          </label>
-          <input type="text" value={filterText} placeholder="Search..." 
-          onChange={(e) => onFilterTextChange(e.target.value)}/>
-        </form>
-      );
-    }
-
+    );
 }
